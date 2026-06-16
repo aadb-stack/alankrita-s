@@ -10,8 +10,101 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+
+<!-- ============================================================
+     CURTAIN REVEAL  ·  self-contained (no edits needed to styles.css / script.js)
+     Drag / swipe / scroll / tap to part the curtains and enter.
+     ============================================================ -->
+<style>
+  /* Hide the hero heading while the curtain is up, so only ONE
+     'Alankrita' is ever visible (no double-heading glitch). */
+  html.js body.curtain-on { overflow: hidden; }
+  html.js body.curtain-on .img-hero-content,
+  html.js body.curtain-on .scroll-cue { opacity: 0 !important; }
+  .img-hero-content, .scroll-cue { transition: opacity 1s ease; }
+
+  .curtain {
+    position: fixed; inset: 0; height: 100%;
+    z-index: 9999;
+    background: #2C3124;
+    touch-action: none;
+    user-select: none; -webkit-user-select: none;
+  }
+  html:not(.js) .curtain { display: none; }          /* progressive enhancement */
+  .curtain.lift { opacity: 0; transition: opacity .55s ease; }
+
+  .curtain-panel {
+    position: absolute; left: 0; width: 100%; height: 50.6%;
+    background: linear-gradient(180deg, #2b3122 0%, #181c11 100%);
+    transition: transform .8s cubic-bezier(.76,0,.24,1);
+    will-change: transform;
+  }
+  .curtain-top { top: 0;    border-bottom: 1px solid rgba(201,160,92,.35); box-shadow: 0 2px 34px rgba(201,160,92,.14); }
+  .curtain-bot { bottom: 0; border-top: 1px solid rgba(201,160,92,.35);    box-shadow: 0 -2px 34px rgba(201,160,92,.14); }
+  .curtain.dragging .curtain-panel { transition: none; }
+
+  .curtain-wordmark {
+    position: absolute; inset: 0; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: .25rem; text-align: center; pointer-events: none;
+  }
+  .cw-name {
+    font-family: 'Italiana','Cormorant Garamond',serif;
+    font-size: clamp(2.7rem, 11vw, 7rem);
+    line-height: .95; letter-spacing: .12em; text-indent: .12em;
+    text-transform: uppercase;
+    color: var(--gold, #C9A05C);
+  }
+  .cw-sub {
+    font-family: 'Cormorant Garamond',serif; font-style: italic;
+    font-size: clamp(1.3rem, 5vw, 2.6rem);
+    letter-spacing: .2em; text-indent: .2em;
+    color: var(--ivory, #F3ECDD); opacity: .92;
+  }
+
+  .curtain-hint {
+    position: absolute; left: 0; right: 0; bottom: 7%; z-index: 3;
+    display: flex; flex-direction: column; align-items: center; gap: .5rem;
+    transition: opacity .4s ease; pointer-events: none;
+  }
+  .curtain-hint span {
+    font-family: 'Karla',sans-serif; font-size: .62rem;
+    letter-spacing: .34em; text-transform: uppercase;
+    color: rgba(243,236,221,.72);
+  }
+  .cw-chev { width: 22px; height: 22px; fill: none; stroke: var(--gold, #C9A05C); stroke-width: 1.4; }
+  .cw-chev.up   { animation: cwBobUp   1.7s ease-in-out infinite; }
+  .cw-chev.down { animation: cwBobDown 1.7s ease-in-out infinite; }
+  .curtain.dragging .curtain-hint { opacity: 0; }
+  .curtain:focus { outline: none; }
+
+  @keyframes cwBobUp   { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-7px); } }
+  @keyframes cwBobDown { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(7px); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .curtain { display: none !important; }
+    html.js body.curtain-on { overflow: auto; }
+    html.js body.curtain-on .img-hero-content,
+    html.js body.curtain-on .scroll-cue { opacity: 1 !important; }
+  }
+</style>
 </head>
-<body class="is-home home-top">
+<body class="is-home home-top curtain-on">
+
+<!-- ===== Curtain reveal ===== -->
+<div class="curtain" id="curtain" role="button" tabindex="0" aria-label="Swipe, scroll or tap to part the curtains and enter">
+  <div class="curtain-panel curtain-top"></div>
+  <div class="curtain-panel curtain-bot"></div>
+  <div class="curtain-wordmark">
+    <span class="cw-name">Alankrita</span>
+    <span class="cw-sub">Saree</span>
+  </div>
+  <div class="curtain-hint" id="curtainHint">
+    <svg viewBox="0 0 24 24" class="cw-chev up"><polyline points="6 15 12 9 18 15"/></svg>
+    <span>Swipe or scroll to enter</span>
+    <svg viewBox="0 0 24 24" class="cw-chev down"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</div>
 
 <nav id="nav">
   <a class="logo" href="index.html">Alankrita<span>saree · pune</span></a>
@@ -161,5 +254,86 @@
 </a>
 
 <script src="script.js"></script>
+
+<!-- ===== Curtain reveal logic (self-contained) ===== -->
+<script>
+(function () {
+  var curtain = document.getElementById('curtain');
+  if (!curtain) return;
+
+  var topP = curtain.querySelector('.curtain-top');
+  var botP = curtain.querySelector('.curtain-bot');
+  var hint = document.getElementById('curtainHint');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function revealSite() { document.body.classList.remove('curtain-on'); }
+
+  if (reduce) { revealSite(); if (curtain.parentNode) curtain.remove(); return; }
+
+  try { window.scrollTo(0, 0); } catch (e) {}
+
+  var dragging = false, startY = 0, delta = 0, opened = false;
+  function panelH() { return curtain.offsetHeight / 2; }
+
+  // Move only the panels — the wordmark stays pinned (it never fades while you part the curtains)
+  function apply(d) {
+    var ph = panelH(), dd = Math.max(0, Math.min(d, ph));
+    topP.style.transform = 'translateY(' + (-dd) + 'px)';
+    botP.style.transform = 'translateY(' + dd + 'px)';
+    if (hint) hint.style.opacity = String(Math.max(1 - (dd / ph) * 2.2, 0));
+  }
+
+  function openCurtain() {
+    if (opened) return;
+    opened = true;
+    curtain.classList.remove('dragging');
+    topP.style.transform = 'translateY(-101%)';
+    botP.style.transform = 'translateY(101%)';
+    if (hint) hint.style.opacity = '0';
+    curtain.style.pointerEvents = 'none';
+    // Once the curtains have parted, lift the curtain away while the hero heading fades in.
+    setTimeout(function () { curtain.classList.add('lift'); revealSite(); }, 680);
+    setTimeout(function () { if (curtain.parentNode) curtain.remove(); }, 1260);
+  }
+
+  function resetCurtain() {
+    curtain.classList.remove('dragging');
+    topP.style.transform = '';
+    botP.style.transform = '';
+    if (hint) hint.style.opacity = '';
+    delta = 0;
+  }
+
+  function pointY(e) { return (e.touches && e.touches[0]) ? e.touches[0].clientY : e.clientY; }
+
+  function onDown(e) { if (opened) return; dragging = true; startY = pointY(e); delta = 0; curtain.classList.add('dragging'); }
+  function onMove(e) { if (!dragging || opened) return; delta = Math.abs(pointY(e) - startY); apply(delta); if (e.cancelable) e.preventDefault(); }
+  function onUp()    { if (!dragging || opened) return; dragging = false; if (delta < 8 || delta > panelH() * 0.30) openCurtain(); else resetCurtain(); }
+
+  // Scroll / trackpad also parts the curtains
+  function onWheel(e) {
+    if (opened) return;
+    curtain.classList.add('dragging');
+    delta = Math.max(0, delta + e.deltaY);
+    apply(delta);
+    if (e.cancelable) e.preventDefault();
+    if (delta > panelH() * 0.45) openCurtain();
+  }
+
+  curtain.addEventListener('mousedown', onDown);
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('mouseup', onUp);
+  curtain.addEventListener('touchstart', onDown, { passive: true });
+  window.addEventListener('touchmove', onMove, { passive: false });
+  window.addEventListener('touchend', onUp);
+  window.addEventListener('wheel', onWheel, { passive: false });
+
+  // Keyboard / tap accessibility
+  curtain.addEventListener('keydown', function (e) {
+    if (['Enter', ' ', 'Spacebar', 'ArrowDown', 'ArrowUp'].indexOf(e.key) > -1) { e.preventDefault(); openCurtain(); }
+  });
+  try { curtain.focus({ preventScroll: true }); } catch (e) {}
+})();
+</script>
 </body>
 </html>
