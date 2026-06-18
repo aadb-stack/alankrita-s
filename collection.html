@@ -75,6 +75,27 @@
   .collection-count{order:2;width:100%}
   .modal-colors .dot{width:30px;height:30px}
 }
+
+/* ===== hover / swipe COLOUR CAROUSEL on each saree card ===== */
+.card-cara{position:relative;width:100%;overflow:hidden;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:pan-y}
+.card-cara.dragging{cursor:grabbing}
+.card-cara-track{display:flex;flex-wrap:nowrap;will-change:transform;transition:transform .45s cubic-bezier(.76,0,.24,1)}
+.card-cara.dragging .card-cara-track{transition:none}
+.card-cara-slide{position:relative;flex:0 0 100%}
+.card-cara-slide .saree-visual{display:block;width:100%}
+.cara-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:34px;height:34px;display:grid;place-content:center;padding:0;border:none;border-radius:50%;background:rgba(28,31,20,.42);color:var(--ivory,#F3ECDD);font-size:1.5rem;line-height:1;cursor:pointer;opacity:0;transition:opacity .3s,background .2s;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.cara-nav.prev{left:10px}
+.cara-nav.next{right:10px}
+.cara-nav:hover{background:rgba(28,31,20,.72)}
+.card-img:hover .cara-nav,.card-img:focus-within .cara-nav{opacity:1}
+.cara-dots{position:absolute;left:0;right:0;bottom:12px;z-index:4;display:flex;justify-content:center;gap:.4rem;pointer-events:none}
+.cara-dots span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55);transition:.25s}
+.cara-dots span.on{background:#fff;width:16px;border-radius:4px}
+.card-cara-name{position:absolute;left:0;right:0;top:14px;z-index:4;text-align:center;color:#fff;font-family:var(--body);font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;opacity:0;transition:opacity .3s;text-shadow:0 1px 6px rgba(0,0,0,.55);pointer-events:none}
+.card-img:hover .card-cara-name,.card-img:focus-within .card-cara-name{opacity:1}
+.card-colors span[data-ci]{cursor:pointer;transition:.2s}
+.card-colors span.sel{box-shadow:0 0 0 2px var(--ivory,#F3ECDD),0 0 0 3px var(--gold,#C9A05C)}
+@media (hover:none){ .cara-nav{display:none} .card-cara-name{opacity:1} }
 </style>
 </head>
 <body class="">
@@ -257,6 +278,66 @@
   }
   const countWith=f=>sarees.filter(s=>matches(s,f)).length;
 
+  /* ---------- per-card colour carousel (hover / swipe / arrows) ---------- */
+  function setupCara(card,s){
+    const wrap=card.querySelector('.card-img');
+    const cara=wrap&&wrap.querySelector('.card-cara');
+    const n=s.colors.length;
+    let dragged=false;
+    card._ci=0;
+    if(!cara||n<2) return ()=>false;
+    const track=cara.querySelector('.card-cara-track');
+    const navDots=[...wrap.querySelectorAll('.cara-dots span')];
+    const nameEl=wrap.querySelector('.card-cara-name');
+    const lowDots=[...card.querySelectorAll('.card-colors span[data-ci]')];
+    const buy=card.querySelector('.buy-btn');
+    let idx=0;
+    function update(){
+      track.style.transform='translateX('+(-idx*100)+'%)';
+      navDots.forEach((d,j)=>d.classList.toggle('on',j===idx));
+      lowDots.forEach((d,j)=>d.classList.toggle('sel',j===idx));
+      if(nameEl) nameEl.textContent=s.colors[idx].name;
+      if(buy) buy.href=waLink(s,s.colors[idx]);
+      card._ci=idx;
+    }
+    function go(i){ idx=(i+n)%n; update(); }
+    const prev=wrap.querySelector('.cara-nav.prev'), next=wrap.querySelector('.cara-nav.next');
+    prev&&prev.addEventListener('click',e=>{e.stopPropagation();go(idx-1);});
+    next&&next.addEventListener('click',e=>{e.stopPropagation();go(idx+1);});
+    lowDots.forEach((d,j)=>d.addEventListener('click',e=>{e.stopPropagation();go(j);}));
+    let sx=0,sy=0,dx=0,active=false,lock=0;   // lock: 0 undecided · 1 horizontal · 2 vertical
+    function onMove(e){
+      dx=e.clientX-sx; const dy=e.clientY-sy;
+      if(lock===0){
+        if(Math.abs(dx)>8&&Math.abs(dx)>=Math.abs(dy)){ lock=1; dragged=true; cara.classList.add('dragging'); }
+        else if(Math.abs(dy)>8){ lock=2; finish(); return; }
+        else return;
+      }
+      if(lock===1){ if(e.cancelable)e.preventDefault(); track.style.transform='translateX(calc('+(-idx*100)+'% + '+dx+'px))'; }
+    }
+    function finish(){
+      window.removeEventListener('pointermove',onMove);
+      window.removeEventListener('pointerup',finish);
+      window.removeEventListener('pointercancel',finish);
+      if(active&&lock===1){
+        cara.classList.remove('dragging');
+        const w=cara.offsetWidth||1, th=Math.min(60,w*0.2);
+        if(dx<=-th) idx=(idx+1)%n; else if(dx>=th) idx=(idx-1+n)%n;
+        update();
+      }
+      active=false; lock=0;
+      setTimeout(()=>{dragged=false;},50);
+    }
+    cara.addEventListener('pointerdown',e=>{
+      if(e.button&&e.button!==0) return;
+      active=true; lock=0; dx=0; sx=e.clientX; sy=e.clientY;
+      window.addEventListener('pointermove',onMove,{passive:false});
+      window.addEventListener('pointerup',finish);
+      window.addEventListener('pointercancel',finish);
+    });
+    return ()=>dragged;
+  }
+
   const grid=document.getElementById('collectionGrid'), countEl=document.getElementById('collectionCount');
   function render(){
     grid.innerHTML='';
@@ -265,13 +346,19 @@
     if(!shown.length){ grid.innerHTML='<p style="grid-column:1/-1;text-align:center;font-family:var(--serif);font-style:italic;font-size:1.2rem;color:#76745f;padding:3rem 0">No sarees match these filters — try widening your selection.</p>'; return; }
     shown.forEach((s,i)=>{
       const idx=sarees.indexOf(s);
-      const dots=s.colors.slice(0,4).map(c=>`<span style="background:${c.hex}"></span>`).join('')+(s.colors.length>4?`<span class="more">+${s.colors.length-4}</span>`:'');
+      const multi=s.colors.length>1;
+      const dots=s.colors.slice(0,4).map((c,j)=>`<span class="${j===0?'sel':''}" style="background:${c.hex}" data-ci="${j}"></span>`).join('')+(s.colors.length>4?`<span class="more">+${s.colors.length-4}</span>`:'');
+      const slides=s.colors.map(c=>`<div class="card-cara-slide">${visualHTML(c)}</div>`).join('');
+      const caraNav=multi?`<button class="cara-nav prev" type="button" aria-label="Previous colour">‹</button><button class="cara-nav next" type="button" aria-label="Next colour">›</button>`:'';
+      const caraName=multi?`<span class="card-cara-name">${s.colors[0].name}</span>`:'';
+      const caraDots=multi?`<div class="cara-dots">${s.colors.map((c,j)=>`<span class="${j===0?'on':''}"></span>`).join('')}</div>`:'';
       const card=document.createElement('div'); card.className='card reveal'+(i%3===1?' d1':i%3===2?' d2':''); card.setAttribute('role','button'); card.tabIndex=0; card.setAttribute('aria-label','View '+s.name);
-      card.innerHTML=`<div class="card-img parallax-frame"><span class="card-tag">${s.tag}</span>${visualHTML(s.colors[0])}<span class="card-view">View details</span></div>
+      card.innerHTML=`<div class="card-img parallax-frame"><span class="card-tag">${s.tag}</span><div class="card-cara"><div class="card-cara-track">${slides}</div></div>${caraNav}${caraName}${caraDots}<span class="card-view">View details</span></div>
         <div class="card-body"><h3>${s.name}</h3><p class="card-fabric">${s.blurb}</p><div class="card-colors">${dots}</div>
         <div class="card-foot" style="margin-top:.9rem"><span class="price">${rupee(s.priceVal)}</span><a class="buy-btn" href="${waLink(s,s.colors[0])}" target="_blank" rel="noopener">${WA_SVG} Buy on WhatsApp</a></div></div>`;
-      card.addEventListener('click',e=>{ if(e.target.closest('.buy-btn'))return; openModal(idx); });
-      card.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModal(idx);} });
+      const isDragged=setupCara(card,s);
+      card.addEventListener('click',e=>{ if(e.target.closest('.buy-btn'))return; if(e.target.closest('.cara-nav'))return; if(e.target.closest('.card-colors span'))return; if(isDragged())return; openModal(idx,card._ci||0); });
+      card.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModal(idx,card._ci||0);} });
       grid.appendChild(card);
     });
     reveal();
@@ -304,8 +391,8 @@
   /* ---------- detail modal with colour variations ---------- */
   let modal;
   const modalOpen=()=>modal&&modal.classList.contains('open');
-  function openModal(idx){
-    const s=sarees[idx]; let sel=0;
+  function openModal(idx,startColor){
+    const s=sarees[idx]; let sel=Math.min(Math.max(startColor||0,0),s.colors.length-1);
     if(!modal){
       modal=document.createElement('div'); modal.id='sareeModal'; modal.className='modal';
       modal.innerHTML=`<div class="modal-backdrop" data-close></div>
