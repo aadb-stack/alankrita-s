@@ -11,13 +11,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-/* ============================================================
-   SOCIALS-PAGE ONLY
-   ============================================================ */
 #page-socials{padding-bottom:0}
 .s-pad{padding:clamp(3.6rem,6.5vw,6.5rem) 6vw}
 .socials-wrap{max-width:1180px;margin:0 auto}
-.ink-link{color:var(--gold,#C9A05C);text-decoration:underline;text-underline-offset:3px}
 
 /* intro chip */
 .intro-chip{display:inline-flex;align-items:center;gap:.55rem;margin-top:1.8rem;padding:.6rem 1.2rem;border:1px solid rgba(201,160,92,.42);border-radius:40px;font-family:var(--body,'Karla',sans-serif);font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--olive-deep,#3a3f2c);text-decoration:none;transition:.3s}
@@ -31,28 +27,20 @@
 .sec-head h3 em{font-family:var(--serif,'Cormorant Garamond',serif);font-style:italic;color:var(--gold,#C9A05C)}
 .sec-rule{width:52px;height:1px;background:var(--gold,#C9A05C);opacity:.55;margin:1.1rem auto 0}
 
-/* reels — INSTAGRAM gradient frame */
+/* reels — self-hosted videos in Instagram-gradient frames */
 .reel-embeds{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;max-width:1180px;margin:0 auto}
 .reel-frame{position:relative;padding:5px;border-radius:20px;background:linear-gradient(135deg,#feda75 0%,#fa7e1e 20%,#d62976 48%,#962fbf 72%,#4f5bd5 100%);box-shadow:0 22px 50px -26px rgba(60,20,80,.5)}
-.reel-stage{position:relative;display:flex;min-height:540px;border-radius:15px;overflow:hidden;background:#15130f}
-/* loading spinner (hidden once the reel renders over it) */
-.reel-stage::after{content:'';position:absolute;top:50%;left:50%;width:40px;height:40px;margin:-20px 0 0 -20px;z-index:0;border-radius:50%;border:2px solid rgba(255,255,255,.2);border-top-color:#fff;animation:reelSpin .9s linear infinite}
-@keyframes reelSpin{to{transform:rotate(360deg)}}
-.reel-stage .instagram-media{position:relative;z-index:1;width:100% !important;min-width:0 !important;max-width:none !important;margin:0 !important;border-radius:13px !important}
-/* the raw blockquote (and its blue link) is hidden in EVERY state */
-.reel-stage blockquote.instagram-media,
-.reel-stage blockquote.instagram-media *{visibility:hidden !important;color:transparent !important;font-size:0 !important}
-.reel-stage iframe.instagram-media{animation:reelIn .55s ease both}
-@keyframes reelIn{from{opacity:0}to{opacity:1}}
-/* graceful fallback for reels Instagram won't embed */
-.reel-watch{position:absolute;inset:0;z-index:2;display:none;flex-direction:column;align-items:center;justify-content:center;gap:.9rem;text-decoration:none}
-.reel-frame.reel-fallback .reel-stage::after{display:none}
-.reel-frame.reel-fallback .reel-watch{display:flex}
-.reel-watch .pl{width:58px;height:58px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.08);display:grid;place-content:center;transition:.3s}
-.reel-watch:hover .pl{background:#fff}
-.reel-watch .pl svg{width:20px;height:20px;fill:#fff;transition:.3s}
-.reel-watch:hover .pl svg{fill:#d62976}
-.reel-watch .tx{font-family:var(--body,'Karla',sans-serif);font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.9)}
+.reel-stage{position:relative;aspect-ratio:9/16;border-radius:15px;overflow:hidden;background:#15130f}
+.reel-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.reel-play{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;text-decoration:none;transition:opacity .4s ease}
+.reel-stage.is-playing .reel-play{opacity:0;pointer-events:none}
+.reel-play .pl{width:60px;height:60px;border-radius:50%;display:grid;place-content:center;background:linear-gradient(135deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);box-shadow:0 8px 24px rgba(0,0,0,.35);transition:transform .3s}
+.reel-play:hover .pl{transform:scale(1.08)}
+.reel-play .pl svg{width:24px;height:24px;fill:#fff;margin-left:3px}
+.reel-play .tx{font-family:var(--body,'Karla',sans-serif);font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.85);text-shadow:0 1px 4px rgba(0,0,0,.4)}
+.reel-link{position:absolute;top:12px;right:12px;z-index:3;width:36px;height:36px;border-radius:50%;display:grid;place-content:center;background:rgba(0,0,0,.4);color:#fff;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);transition:.3s}
+.reel-link:hover{background:linear-gradient(135deg,#feda75,#d62976,#4f5bd5)}
+.reel-link svg{width:18px;height:18px}
 .reel-hint{display:none}
 
 /* connect cards */
@@ -83,8 +71,7 @@
   .socials-grid{grid-template-columns:1fr;max-width:430px}
   .reel-embeds{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:1rem;scrollbar-width:none}
   .reel-embeds::-webkit-scrollbar{display:none}
-  .reel-frame{flex:0 0 100%;scroll-snap-align:center}
-  .reel-stage{min-height:470px}
+  .reel-frame{flex:0 0 80%;scroll-snap-align:center}
   .reel-hint{display:block;text-align:center;margin-top:1.1rem;font-family:var(--body,'Karla',sans-serif);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold,#C9A05C)}
 }
 </style>
@@ -116,7 +103,7 @@
     </a>
   </div>
 
-  <!-- Reels (Instagram-gradient framed) -->
+  <!-- Reels (self-hosted videos in Instagram-gradient frames) -->
   <div class="s-pad">
     <div class="sec-head reveal">
       <p class="kicker">Watch</p>
@@ -125,28 +112,34 @@
     </div>
     <div class="reel-embeds">
       <div class="reel-frame"><div class="reel-stage">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DSzB2kDjAs4/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DSzB2kDjAs4/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
-        <a class="reel-watch" href="https://www.instagram.com/reel/DSzB2kDjAs4/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+        <video class="reel-vid" muted loop playsinline preload="metadata" poster="reels/reel1.jpg"><source src="reels/reel1.mp4" type="video/mp4"></video>
+        <a class="reel-link" href="https://www.instagram.com/reel/DSzB2kDjAs4/" target="_blank" rel="noopener" aria-label="Open on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="reel-play" href="https://www.instagram.com/reel/DSzB2kDjAs4/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Play reel</span></a>
       </div></div>
       <div class="reel-frame"><div class="reel-stage">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DVNdW_QDKlZ/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DVNdW_QDKlZ/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
-        <a class="reel-watch" href="https://www.instagram.com/reel/DVNdW_QDKlZ/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+        <video class="reel-vid" muted loop playsinline preload="metadata" poster="reels/reel2.jpg"><source src="reels/reel2.mp4" type="video/mp4"></video>
+        <a class="reel-link" href="https://www.instagram.com/reel/DVNdW_QDKlZ/" target="_blank" rel="noopener" aria-label="Open on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="reel-play" href="https://www.instagram.com/reel/DVNdW_QDKlZ/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Play reel</span></a>
       </div></div>
       <div class="reel-frame"><div class="reel-stage">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DXUJn_aIo60/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DXUJn_aIo60/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
-        <a class="reel-watch" href="https://www.instagram.com/reel/DXUJn_aIo60/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+        <video class="reel-vid" muted loop playsinline preload="metadata" poster="reels/reel3.jpg"><source src="reels/reel3.mp4" type="video/mp4"></video>
+        <a class="reel-link" href="https://www.instagram.com/reel/DXUJn_aIo60/" target="_blank" rel="noopener" aria-label="Open on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="reel-play" href="https://www.instagram.com/reel/DXUJn_aIo60/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Play reel</span></a>
       </div></div>
       <div class="reel-frame"><div class="reel-stage">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DZmM7Shgr1K/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DZmM7Shgr1K/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
-        <a class="reel-watch" href="https://www.instagram.com/reel/DZmM7Shgr1K/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+        <video class="reel-vid" muted loop playsinline preload="metadata" poster="reels/reel4.jpg"><source src="reels/reel4.mp4" type="video/mp4"></video>
+        <a class="reel-link" href="https://www.instagram.com/reel/DZmM7Shgr1K/" target="_blank" rel="noopener" aria-label="Open on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="reel-play" href="https://www.instagram.com/reel/DZmM7Shgr1K/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Play reel</span></a>
       </div></div>
       <div class="reel-frame"><div class="reel-stage">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DTVPKF1DEVR/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DTVPKF1DEVR/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
-        <a class="reel-watch" href="https://www.instagram.com/reel/DTVPKF1DEVR/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+        <video class="reel-vid" muted loop playsinline preload="metadata" poster="reels/reel5.jpg"><source src="reels/reel5.mp4" type="video/mp4"></video>
+        <a class="reel-link" href="https://www.instagram.com/reel/DTVPKF1DEVR/" target="_blank" rel="noopener" aria-label="Open on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="reel-play" href="https://www.instagram.com/reel/DTVPKF1DEVR/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Play reel</span></a>
       </div></div>
       <div class="reel-frame"><div class="reel-stage">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPylJg7EuQi/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DPylJg7EuQi/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
-        <a class="reel-watch" href="https://www.instagram.com/reel/DPylJg7EuQi/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+        <video class="reel-vid" muted loop playsinline preload="metadata" poster="reels/reel6.jpg"><source src="reels/reel6.mp4" type="video/mp4"></video>
+        <a class="reel-link" href="https://www.instagram.com/reel/DPylJg7EuQi/" target="_blank" rel="noopener" aria-label="Open on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="reel-play" href="https://www.instagram.com/reel/DPylJg7EuQi/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Play reel</span></a>
       </div></div>
     </div>
     <p class="reel-hint">‹ swipe to browse ›</p>
@@ -253,7 +246,6 @@
 </a>
 
 <script src="script.js"></script>
-<script async src="//www.instagram.com/embed.js"></script>
 <script>
 (function(){
   var nav=document.getElementById('nav'), burger=document.getElementById('burger'), navLinks=document.getElementById('navLinks');
@@ -269,25 +261,22 @@
   var vh=window.innerHeight||800;
   document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ if(el.getBoundingClientRect().top<vh*0.92) el.classList.add('in'); else ro.observe(el); });
 
-   function stripReelText(){
-    document.querySelectorAll('.reel-stage blockquote.instagram-media').forEach(function(bq){
-      bq.style.visibility='hidden';
-      bq.querySelectorAll('a').forEach(function(a){ a.textContent=''; });
-    });
-  }
-  function reelCheck(){
-    document.querySelectorAll('.reel-frame').forEach(function(f){
-      f.classList.toggle('reel-fallback', !f.querySelector('iframe.instagram-media'));
-    });
-  }
-  stripReelText();
-  window.addEventListener('load',function(){
-    if(window.instgrm&&window.instgrm.Embeds){ window.instgrm.Embeds.process(); }
-    stripReelText();
-    setTimeout(function(){ stripReelText(); reelCheck(); },2000);
-    setTimeout(function(){ stripReelText(); reelCheck(); },6000);
-    setTimeout(function(){ stripReelText(); reelCheck(); },11000);
+  /* play reels (muted, looping) only while they're on screen */
+  var vids=document.querySelectorAll('.reel-vid');
+  vids.forEach(function(v){
+    v.addEventListener('playing',function(){ var s=v.closest('.reel-stage'); if(s) s.classList.add('is-playing'); });
+    v.addEventListener('pause',function(){ var s=v.closest('.reel-stage'); if(s) s.classList.remove('is-playing'); });
+    v.addEventListener('error',function(){ var s=v.closest('.reel-stage'); if(s) s.classList.remove('is-playing'); });
   });
+  if('IntersectionObserver' in window){
+    var vo=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ e.target.play().catch(function(){}); }
+        else { e.target.pause(); }
+      });
+    },{threshold:0.35});
+    vids.forEach(function(v){ vo.observe(v); });
+  }
 })();
 </script>
 </body>
