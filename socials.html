@@ -34,12 +34,25 @@
 /* reels — olive-matted Instagram embeds */
 .reel-embeds{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;max-width:1180px;margin:0 auto}
 .reel-frame{position:relative;display:flex;min-height:540px;padding:10px;border-radius:16px;border:1px solid rgba(201,160,92,.4);background:linear-gradient(165deg,#3c4231 0%,#2b3122 55%,#222717 100%);box-shadow:0 24px 52px -28px rgba(20,24,14,.6);overflow:hidden}
+/* loading spinner (covered by the reel once it renders) */
 .reel-frame::after{content:'';position:absolute;top:50%;left:50%;width:40px;height:40px;margin:-20px 0 0 -20px;z-index:0;border-radius:50%;border:2px solid rgba(243,236,221,.22);border-top-color:var(--gold,#C9A05C);animation:reelSpin .9s linear infinite}
-.reel-frame .instagram-media{position:relative;z-index:1;width:100% !important;min-width:0 !important;max-width:none !important;margin:0 !important;border-radius:8px !important}
-.reel-frame .instagram-media:not(.instagram-media-rendered){opacity:0}
-.reel-frame .instagram-media.instagram-media-rendered{animation:reelIn .55s ease both}
 @keyframes reelSpin{to{transform:rotate(360deg)}}
+/* the IG embed */
+.reel-frame .instagram-media{position:relative;z-index:1;width:100% !important;min-width:0 !important;max-width:none !important;margin:0 !important;border-radius:8px !important}
+/* keep the un-rendered blockquote (and its raw fallback link) invisible — no blue text, ever */
+.reel-frame blockquote.instagram-media{background:transparent !important;border:0 !important;box-shadow:none !important}
+.reel-frame blockquote.instagram-media a{opacity:0 !important;font-size:0 !important;pointer-events:none}
+.reel-frame iframe.instagram-media{animation:reelIn .55s ease both}
 @keyframes reelIn{from{opacity:0}to{opacity:1}}
+/* graceful fallback button for reels Instagram won't embed */
+.reel-watch{position:absolute;inset:0;z-index:2;display:none;flex-direction:column;align-items:center;justify-content:center;gap:.9rem;text-decoration:none}
+.reel-frame.reel-fallback .reel-watch{display:flex}
+.reel-frame.reel-fallback::after{display:none}
+.reel-watch .pl{width:58px;height:58px;border-radius:50%;border:1px solid rgba(201,160,92,.6);background:rgba(201,160,92,.08);display:grid;place-content:center;transition:.3s}
+.reel-watch:hover .pl{background:var(--gold,#C9A05C)}
+.reel-watch .pl svg{width:20px;height:20px;fill:var(--gold,#C9A05C);transition:.3s}
+.reel-watch:hover .pl svg{fill:#23271a}
+.reel-watch .tx{font-family:var(--body,'Karla',sans-serif);font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(243,236,221,.85)}
 .reel-hint{display:none}
 
 /* connect cards */
@@ -68,7 +81,6 @@
 @media (max-width:820px){ .visit-wrap{grid-template-columns:1fr} }
 @media (max-width:680px){
   .socials-grid{grid-template-columns:1fr;max-width:430px}
-  /* reels → swipeable framed carousel */
   .reel-embeds{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:1rem;scrollbar-width:none}
   .reel-embeds::-webkit-scrollbar{display:none}
   .reel-frame{flex:0 0 100%;scroll-snap-align:center;min-height:470px;padding:8px}
@@ -103,7 +115,7 @@
     </a>
   </div>
 
-  <!-- Reels (olive-framed live Instagram embeds) -->
+  <!-- Reels (olive-framed live embeds, with graceful fallback) -->
   <div class="s-pad">
     <div class="sec-head reveal">
       <p class="kicker">Watch</p>
@@ -111,12 +123,30 @@
       <div class="sec-rule"></div>
     </div>
     <div class="reel-embeds">
-      <div class="reel-frame"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DSzB2kDjAs4/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DSzB2kDjAs4/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote></div>
-      <div class="reel-frame"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DVNdW_QDKlZ/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DVNdW_QDKlZ/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote></div>
-      <div class="reel-frame"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DXUJn_aIo60/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DXUJn_aIo60/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote></div>
-      <div class="reel-frame"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DZmM7Shgr1K/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DZmM7Shgr1K/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote></div>
-      <div class="reel-frame"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DTVPKF1DEVR/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DTVPKF1DEVR/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote></div>
-      <div class="reel-frame"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPylJg7EuQi/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DPylJg7EuQi/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote></div>
+      <div class="reel-frame">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DSzB2kDjAs4/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DSzB2kDjAs4/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
+        <a class="reel-watch" href="https://www.instagram.com/reel/DSzB2kDjAs4/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+      </div>
+      <div class="reel-frame">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DVNdW_QDKlZ/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DVNdW_QDKlZ/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
+        <a class="reel-watch" href="https://www.instagram.com/reel/DVNdW_QDKlZ/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+      </div>
+      <div class="reel-frame">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DXUJn_aIo60/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DXUJn_aIo60/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
+        <a class="reel-watch" href="https://www.instagram.com/reel/DXUJn_aIo60/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+      </div>
+      <div class="reel-frame">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DZmM7Shgr1K/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DZmM7Shgr1K/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
+        <a class="reel-watch" href="https://www.instagram.com/reel/DZmM7Shgr1K/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+      </div>
+      <div class="reel-frame">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DTVPKF1DEVR/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DTVPKF1DEVR/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
+        <a class="reel-watch" href="https://www.instagram.com/reel/DTVPKF1DEVR/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+      </div>
+      <div class="reel-frame">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPylJg7EuQi/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DPylJg7EuQi/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
+        <a class="reel-watch" href="https://www.instagram.com/reel/DPylJg7EuQi/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+      </div>
     </div>
     <p class="reel-hint">‹ swipe to browse ›</p>
   </div>
@@ -237,7 +267,18 @@
   var ro=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); } }); },{threshold:0.01,rootMargin:'0px 0px -8% 0px'});
   var vh=window.innerHeight||800;
   document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ if(el.getBoundingClientRect().top<vh*0.92) el.classList.add('in'); else ro.observe(el); });
-  window.addEventListener('load',function(){ if(window.instgrm&&window.instgrm.Embeds){ window.instgrm.Embeds.process(); } });
+
+  /* show the gold "Watch on Instagram" button for any reel that didn't embed */
+  function reelCheck(){
+    document.querySelectorAll('.reel-frame').forEach(function(f){
+      f.classList.toggle('reel-fallback', !f.querySelector('iframe.instagram-media'));
+    });
+  }
+  window.addEventListener('load',function(){
+    if(window.instgrm&&window.instgrm.Embeds){ window.instgrm.Embeds.process(); }
+    setTimeout(reelCheck,6000);
+    setTimeout(reelCheck,10000);
+  });
 })();
 </script>
 </body>
