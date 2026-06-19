@@ -43,6 +43,28 @@
 @media (max-width:820px){ .visit-wrap{grid-template-columns:1fr} }
 @media (max-width:680px){
   .socials-grid{grid-template-columns:1fr;max-width:430px;margin:0 auto}
+
+  /* reels → swipeable video carousel on phones */
+  .reel-embeds{
+    display:flex;
+    grid-template-columns:none;
+    gap:.9rem;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:1.4rem;
+    scroll-padding:0 7vw;
+    scrollbar-width:none;
+  }
+  .reel-embeds::-webkit-scrollbar{ display:none; }
+  .reel-embeds > .instagram-media{
+    flex:0 0 86%;
+    width:86% !important;
+    min-width:0 !important;
+    max-width:none !important;
+    margin:0 !important;
+    scroll-snap-align:center;
+  }
 }
 </style>
 </head>
