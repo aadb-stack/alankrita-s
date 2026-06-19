@@ -31,16 +31,13 @@
 .sec-head h3 em{font-family:var(--serif,'Cormorant Garamond',serif);font-style:italic;color:var(--gold,#C9A05C)}
 .sec-rule{width:52px;height:1px;background:var(--gold,#C9A05C);opacity:.55;margin:1.1rem auto 0}
 
-/* reels grid + themed loading skeleton */
+/* reels grid + calm loading frame */
 .reel-embeds{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1180px;margin:0 auto}
 .reel-embeds .instagram-media{width:100% !important;min-width:0 !important;max-width:none !important;margin:0 !important}
 .reel-embeds .instagram-media.instagram-media-rendered{border-radius:12px !important;box-shadow:0 20px 46px -26px rgba(20,24,14,.5) !important;animation:reelIn .55s ease both}
 @keyframes reelIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.reel-embeds .instagram-media:not(.instagram-media-rendered){position:relative;min-height:560px;background:linear-gradient(160deg,#2b3122,#1b1f12) !important;border:1px solid rgba(201,160,92,.22) !important;border-radius:12px !important;overflow:hidden !important;box-shadow:0 20px 46px -26px rgba(20,24,14,.55) !important}
+.reel-embeds .instagram-media:not(.instagram-media-rendered){min-height:470px;background:transparent !important;border:1px solid rgba(201,160,92,.18) !important;border-radius:12px !important;box-shadow:none !important;overflow:hidden !important}
 .reel-embeds .instagram-media:not(.instagram-media-rendered) *{visibility:hidden !important}
-.reel-embeds .instagram-media:not(.instagram-media-rendered)::before{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 25%,rgba(243,236,221,.09) 45%,transparent 65%);background-size:220% 100%;animation:reelSh 1.5s linear infinite}
-.reel-embeds .instagram-media:not(.instagram-media-rendered)::after{content:'Alankrita · reel';position:absolute;left:0;right:0;bottom:24px;text-align:center;font-family:var(--body,'Karla',sans-serif);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,160,92,.82)}
-@keyframes reelSh{from{background-position:220% 0}to{background-position:-220% 0}}
 
 /* connect cards */
 .socials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;max-width:1080px;margin:0 auto}
@@ -72,7 +69,7 @@
   .reel-embeds{display:flex;gap:.9rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:1.2rem;scrollbar-width:none}
   .reel-embeds::-webkit-scrollbar{display:none}
   .reel-embeds .instagram-media{flex:0 0 86%;width:86% !important;scroll-snap-align:center}
-  .reel-embeds .instagram-media:not(.instagram-media-rendered){min-height:520px}
+  .reel-embeds .instagram-media:not(.instagram-media-rendered){min-height:430px}
 }
 </style>
 </head>
@@ -103,7 +100,7 @@
     </a>
   </div>
 
-  <!-- Reels (live Instagram embeds, themed loading state) -->
+  <!-- Reels (live Instagram embeds) -->
   <div class="s-pad">
     <div class="sec-head reveal">
       <p class="kicker">Watch</p>
