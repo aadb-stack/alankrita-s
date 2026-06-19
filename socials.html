@@ -1,136 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.className='js';</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2C3124">
+<title>Our Socials — Alankrita Saree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
 /* ============================================================
-   SOCIALS PAGE
+   SOCIALS-PAGE ONLY  (uses your existing theme variables)
    ============================================================ */
-.socials-page { padding-top: 140px; }
+.socials-wrap{max-width:1100px;margin:0 auto}
+.sec-head{text-align:center;max-width:680px;margin:0 auto 2.6rem}
+.sec-head h3{font-family:var(--display,'Italiana',serif);font-weight:400;font-size:clamp(1.7rem,4vw,2.6rem);letter-spacing:.02em;color:var(--olive-deep,#3a3f2c);margin:.3rem 0 0}
+.sec-head h3 em{font-family:var(--serif,'Cormorant Garamond',serif);font-style:italic;color:var(--gold,#C9A05C)}
+.ink-link{color:var(--gold,#C9A05C);text-decoration:underline;text-underline-offset:3px}
 
-.socials-intro {
-  text-align: center;
-  max-width: 720px;
-  margin: 0 auto 56px;
-  padding: 0 24px;
-}
-.socials-intro h1 {
-  font-family: var(--font-heading);
-  font-size: 64px;
-  font-weight: 300;
-  font-style: italic;
-  letter-spacing: 0.04em;
-  line-height: 1.1;
-  margin-bottom: 22px;
-}
-.socials-intro p {
-  font-size: 15px;
-  color: var(--text-secondary);
-  line-height: 1.85;
-  max-width: 540px;
-  margin: 0 auto;
-}
+/* reels */
+.reel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem}
+.reel{position:relative;display:block;aspect-ratio:9/16;border-radius:6px;overflow:hidden;text-decoration:none}
+.reel-bg{position:absolute;inset:0;transition:transform .6s var(--ease,cubic-bezier(.76,0,.24,1))}
+.reel:hover .reel-bg{transform:scale(1.05)}
+.reel::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(20,24,14,.6),rgba(20,24,14,0) 48%)}
+.reel-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:52px;height:52px;border-radius:50%;background:rgba(243,236,221,.2);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);display:grid;place-content:center;transition:.3s}
+.reel:hover .reel-play{background:var(--gold,#C9A05C)}
+.reel-play svg{width:20px;height:20px;fill:var(--ivory,#F3ECDD)}
+.reel:hover .reel-play svg{fill:var(--olive-dark,#23271a)}
+.reel-cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:1.4rem 1rem .9rem;color:var(--ivory,#F3ECDD);font-family:var(--serif,'Cormorant Garamond',serif);font-style:italic;font-size:1.05rem;letter-spacing:.02em}
 
-.section-alt { background: #F5F1E8; }
-.text-gold { color: var(--accent-gold); }
+/* connect cards */
+.socials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+.social-card{display:flex;align-items:center;gap:1rem;padding:1.5rem 1.4rem;background:var(--ivory,#F3ECDD);border:1px solid rgba(201,160,92,.32);border-radius:5px;text-decoration:none;color:var(--olive-deep,#3a3f2c);transition:transform .35s var(--ease,ease),border-color .35s,box-shadow .35s}
+.social-card:hover{transform:translateY(-5px);border-color:var(--gold,#C9A05C);box-shadow:0 18px 40px -22px rgba(20,24,14,.5)}
+.social-ic{flex-shrink:0;width:50px;height:50px;border-radius:50%;display:grid;place-content:center;background:var(--olive,#5a6147);color:var(--ivory,#F3ECDD);transition:.35s}
+.social-card:hover .social-ic{background:var(--gold,#C9A05C);color:var(--olive-dark,#23271a)}
+.social-ic svg{width:23px;height:23px}
+.social-tx{display:flex;flex-direction:column;gap:.15rem}
+.social-tx .lbl{font-family:var(--body,'Karla',sans-serif);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold,#C9A05C)}
+.social-tx .val{font-family:var(--serif,'Cormorant Garamond',serif);font-size:1.1rem;color:var(--olive-deep,#3a3f2c)}
 
-/* Reels grid */
-.reels-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  max-width: 1040px;
-  margin: 0 auto;
-}
-.reel-card {
-  position: relative;
-  display: block;
-  aspect-ratio: 9 / 16;
-  overflow: hidden;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.reel-card .reel-thumb-img { width: 100%; height: 100%; }
-.reel-card:hover .reel-thumb-img { transform: scale(1.05); }
-.reel-card-caption {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  z-index: 2;
-  padding: 44px 18px 16px;
-  text-align: left;
-  font-family: var(--font-heading);
-  font-size: 18px;
-  letter-spacing: 0.04em;
-  color: var(--white);
-  background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0));
-}
+/* visit */
+.visit-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:2.4rem;align-items:center;max-width:1000px;margin:0 auto}
+.visit-wrap .addr{font-family:var(--serif,'Cormorant Garamond',serif);font-size:1.15rem;line-height:1.7;color:var(--olive-deep,#3a3f2c)}
+.visit-map{width:100%;height:300px;border:0;border-radius:6px;display:block;filter:saturate(.9)}
 
-/* Connect — social cards */
-.socials-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  max-width: 980px;
-  margin: 0 auto;
+@media (max-width:820px){ .visit-wrap{grid-template-columns:1fr} }
+@media (max-width:680px){
+  .reel-grid{grid-template-columns:repeat(2,1fr);gap:.9rem}
+  .socials-grid{grid-template-columns:1fr;max-width:430px;margin:0 auto}
 }
-.social-card {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  padding: 26px 24px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  text-align: left;
-  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-.social-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--accent-gold);
-  box-shadow: 0 18px 36px -22px rgba(26,26,26,0.45);
-}
-.social-card > span:not(.social-card-icon) {
-  display: flex;
-  flex-direction: column;
-}
-.social-card-icon {
-  flex-shrink: 0;
-  width: 52px; height: 52px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--gold-light);
-  color: var(--text-primary);
-  transition: background var(--transition-fast), color var(--transition-fast);
-}
-.social-card:hover .social-card-icon { background: var(--accent-gold); color: var(--white); }
-.social-card-icon svg { width: 24px; height: 24px; }
-.social-card-label {
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  font-weight: 500;
-  margin-bottom: 5px;
-}
-.social-card-handle {
-  font-size: 13px;
-  color: var(--text-secondary);
-  letter-spacing: 0.03em;
-}
+</style>
+</head>
+<body class="">
 
-/* Quick links */
-.quick-links-row {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+<nav id="nav">
+  <a class="logo" href="index.html">Alankrita<span>saree · pune</span></a>
+  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="collection.html">Collection</a></li>
+    <li><a href="story.html">Our Story</a></li>
+    <li><a href="craft.html">The Craft</a></li>
+    <li><a href="appointment.html">Book Appointment</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="socials.html" class="active">Our Socials</a></li>
+  </ul>
+</nav>
 
-/* Socials responsive */
-@media (max-width: 1024px) {
-  .socials-grid { grid-template-columns: repeat(2, 1fr); max-width: 660px; }
-}
-@media (max-width: 768px) {
-  .socials-page { padding-top: 112px; }
-  .socials-intro h1 { font-size: 42px; }
-  .reels-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-  .socials-grid { grid-template-columns: 1fr; max-width: 420px; }
-}
-@media (max-width: 480px) {
-  .reels-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-}
+<main class="page active" id="page-socials">
+  <div class="page-head">
+    <p class="eyebrow reveal">Stay Connected</p>
+    <h2 class="reveal d1">Our <em>Socials</em></h2>
+    <p class="lede reveal d2">Step inside the world of Alankrita — drape diaries, new arrivals and stories straight from the loom. Watch our reels and follow along <a class="ink-link" href="https://www.instagram.com/alankritasaree?igsh=ejkxY3gwem9jM3Mz" target="_blank" rel="noopener">@alankritasaree</a>.</p>
+  </div>
+
+  <!-- Reels -->
+  <section>
+    <div class="socials-wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Watch</p>
+        <h3>Reels &amp; <em>Videos</em></h3>
+      </div>
+      <div class="reel-grid">
+        <a class="reel reveal" href="https://www.instagram.com/alankritasaree?igsh=ejkxY3gwem9jM3Mz" target="_blank" rel="noopener"><span class="reel-bg" style="background:linear-gradient(165deg,#7C3B3B,#4A1F1F)"></span><span class="reel-play"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="reel-cap">Draping Diaries</span></a>
+        <a class="reel reveal d1" href="https://www.instagram.com/alankritasaree?igsh=ejkxY3gwem9jM3Mz" target="_blank" rel="noopener"><span class="reel-bg" style="background:linear-gradient(165deg,#2E4A5C,#16242F)"></span><span class="reel-play"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="reel-cap">New Arrivals</span></a>
+        <a class="reel reveal d2" href="https://www.instagram.com/alankritasaree?igsh=ejkxY3gwem9jM3Mz" target="_blank" rel="noopener"><span class="reel-bg" style="background:linear-gradient(165deg,#5A6147,#343A27)"></span><span class="reel-play"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="reel-cap">Behind the Loom</span></a>
+        <a class="reel reveal" href="https://www.instagram.com/alankritasaree?igsh=ejkxY3gwem9jM3Mz" target="_blank" rel="noopener"><span class="reel-bg" style="background:linear-gradient(165deg,#8A3A55,#4E1B2E)"></span><span class="reel-play"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="reel-cap">Bridal Edit</span></a>
+        <a class="reel reveal d1" href="https://www.instagram.com/alankritasaree?igsh=ejkxY3gwem9jM3Mz" target="_blank" rel="noopener"><span class="reel-bg" style="background:linear-gradient(165deg,#B7A6B8,#7B6680)"></span><span class="reel-play"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="reel-cap">Studio Stories</span></a>
+        <a class="reel reveal d2" href="https://www.instagram.com/alankritasaree?igsh=ejkxY3gwem9jM3Mz" target="_blank" rel="noopener"><span class="reel-bg" style="background:linear-gradient(165deg,#A87E4B,#6E4C26)"></span><span class="reel-play"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="reel-cap">Styling Tips</span></a>
+      </div>
+    </div>
+  </section>
+
+  <div class="zari"></div>
+
+  <!-- Connect -->
+  <section style="background:var(--ivory-soft)">
+    <div class="socials-wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Connect</p>
+        <h3>Find us <em>everywhere</em></h3>
+      </div>
+      <div class="socials-grid">
+        <a class="social-card reveal" href="https://www.instagram.com/alankritasaree?igsh=ejkxY3gwem9jM3Mz" target="_blank" rel="noopener">
+          <span class="social-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
+          <span class="social-tx"><span class="lbl">Instagram</span><span class="val">@alankritasaree</span></span>
+        </a>
+        <a class="social-card reveal d1" href="https://wa.me/918412845177?text=Hello%20Alankrita%20Saree!" target="_blank" rel="noopener">
+          <span class="social-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.5 14.1c-.2.7-1.3 1.3-1.9 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-2.9-1.3-4.8-4.2-5-4.4-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.4.2.5.7 1.8.8 1.9.1.1.1.3 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.5.3.1.5.1.7-.1l.8-1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.6-.1 1.2z"/></svg></span>
+          <span class="social-tx"><span class="lbl">WhatsApp</span><span class="val">+91 84128 45177</span></span>
+        </a>
+        <a class="social-card reveal d2" href="tel:+918412845177">
+          <span class="social-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6 6l.71-.71a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          <span class="social-tx"><span class="lbl">Call Us</span><span class="val">+91 84128 45177</span></span>
+        </a>
+        <a class="social-card reveal" href="https://www.facebook.com/" target="_blank" rel="noopener">
+          <span class="social-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></span>
+          <span class="social-tx"><span class="lbl">Facebook</span><span class="val">Alankrita Sarees</span></span>
+        </a>
+        <a class="social-card reveal d1" href="https://www.youtube.com/" target="_blank" rel="noopener">
+          <span class="social-ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.5a3 3 0 0 0-2.1-2.1C19 4.9 12 4.9 12 4.9s-7 0-8.9.5A3 3 0 0 0 1 7.5 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23.5 12 31 31 0 0 0 23 7.5zM9.8 15.3V8.7l5.7 3.3z"/></svg></span>
+          <span class="social-tx"><span class="lbl">YouTube</span><span class="val">Alankrita Studio</span></span>
+        </a>
+        <a class="social-card reveal d2" href="mailto:hello@alankrita.in">
+          <span class="social-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg></span>
+          <span class="social-tx"><span class="lbl">Email</span><span class="val">hello@alankrita.in</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="zari"></div>
+
+  <!-- Visit -->
+  <section>
+    <div class="socials-wrap">
+      <div class="visit-wrap reveal">
+        <div>
+          <p class="eyebrow">Visit the Atelier</p>
+          <h3 style="font-family:var(--display,'Italiana',serif);font-weight:400;font-size:clamp(1.7rem,4vw,2.6rem);color:var(--olive-deep,#3a3f2c);margin:.3rem 0 1.2rem">Come see us in <em style="font-family:var(--serif,'Cormorant Garamond',serif);font-style:italic;color:var(--gold,#C9A05C)">Pune</em></h3>
+          <p class="addr">4, Mayur Colony,<br>Desai Bandhu Ambewale Building, 5th Floor,<br>Pune, Maharashtra</p>
+          <div style="margin-top:1.6rem"><a class="btn dark" href="https://www.google.com/maps/search/?api=1&query=4%20Mayur%20Colony%2C%20Desai%20Bandhu%20Ambewale%20Building%2C%20Pune" target="_blank" rel="noopener">Get Directions</a></div>
+        </div>
+        <iframe class="visit-map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=4%20Mayur%20Colony%2C%20Desai%20Bandhu%20Ambewale%20Building%2C%20Pune&output=embed" title="Alankrita Saree location"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <div class="zari"></div>
+
+  <!-- Invite strip -->
+  <section class="invite">
+    <div class="invite-inner reveal zoom">
+      <p class="sparkle">✨ Stay close to every new weave ✨</p>
+      <div class="rule"></div>
+      <p>Follow us for first looks at new arrivals, drape inspiration and the stories behind each saree — or come visit us at the atelier.</p>
+      <div style="margin-top:2.4rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+        <a class="btn solid" href="https://www.instagram.com/alankritasaree?igsh=ejkxY3gwem9jM3Mz" target="_blank" rel="noopener">Follow on Instagram</a>
+        <a class="btn" href="https://wa.me/918412845177?text=Hello%20Alankrita%20Saree!" target="_blank" rel="noopener">Chat on WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="foot-logo">Alankrita</div>
+      <p style="font-family:var(--serif);font-style:italic;max-width:32ch">Handwoven sarees, curated with love in Pune — from the loom, for the legacy.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="index.html">Home</a>
+      <a href="collection.html">Collection</a>
+      <a href="story.html">Our Story</a>
+      <a href="craft.html">The Craft</a>
+    </div>
+    <div>
+      <h4>Visit</h4>
+      <a href="appointment.html">Book Appointment</a>
+      <a href="contact.html">Contact</a>
+      <a href="socials.html">Our Socials</a>
+      <a href="https://www.instagram.com/alankritasaree?igsh=ejkxY3gwem9jM3Mz" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://wa.me/918412845177" target="_blank" rel="noopener">WhatsApp · +91 84128 45177</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Alankrita Saree, Pune. All rights reserved.</span>
+    <span>4, Mayur Colony, Desai Bandhu Ambewale Building, 5th Floor</span>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/918412845177?text=Hello%20Alankrita%20Saree!" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.5 14.1c-.2.7-1.3 1.3-1.9 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-2.9-1.3-4.8-4.2-5-4.4-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.4.2.5.7 1.8.8 1.9.1.1.1.3 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.5.3.1.5.1.7-.1l.8-1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.6-.1 1.2z"/></svg>
+</a>
+
+<script src="script.js"></script>
+<script>
+/* nav + reveal fallback (mirrors collection.html, self-contained) */
+(function(){
+  var nav=document.getElementById('nav'), burger=document.getElementById('burger'), navLinks=document.getElementById('navLinks');
+  if(burger&&navLinks){
+    burger.addEventListener('click',function(){ navLinks.classList.toggle('open'); burger.classList.toggle('open'); });
+    navLinks.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ navLinks.classList.remove('open'); burger.classList.remove('open'); }); });
+  }
+  if(nav){
+    window.addEventListener('scroll',function(){ nav.classList.toggle('scrolled',window.scrollY>40); },{passive:true});
+    nav.classList.toggle('scrolled',window.scrollY>40);
+  }
+  var ro=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); } }); },{threshold:0.01,rootMargin:'0px 0px -8% 0px'});
+  var vh=window.innerHeight||800;
+  document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ if(el.getBoundingClientRect().top<vh*0.92) el.classList.add('in'); else ro.observe(el); });
+})();
+</script>
+</body>
+</html>
