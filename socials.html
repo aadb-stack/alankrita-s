@@ -40,7 +40,8 @@
 @keyframes reelSpin{to{transform:rotate(360deg)}}
 .reel-stage .instagram-media{position:relative;z-index:1;width:100% !important;min-width:0 !important;max-width:none !important;margin:0 !important;border-radius:13px !important}
 /* the raw blockquote (and its blue link) is hidden in EVERY state */
-.reel-stage blockquote.instagram-media{visibility:hidden !important}
+.reel-stage blockquote.instagram-media,
+.reel-stage blockquote.instagram-media *{visibility:hidden !important;color:transparent !important;font-size:0 !important}
 .reel-stage iframe.instagram-media{animation:reelIn .55s ease both}
 @keyframes reelIn{from{opacity:0}to{opacity:1}}
 /* graceful fallback for reels Instagram won't embed */
@@ -268,15 +269,24 @@
   var vh=window.innerHeight||800;
   document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ if(el.getBoundingClientRect().top<vh*0.92) el.classList.add('in'); else ro.observe(el); });
 
+   function stripReelText(){
+    document.querySelectorAll('.reel-stage blockquote.instagram-media').forEach(function(bq){
+      bq.style.visibility='hidden';
+      bq.querySelectorAll('a').forEach(function(a){ a.textContent=''; });
+    });
+  }
   function reelCheck(){
     document.querySelectorAll('.reel-frame').forEach(function(f){
       f.classList.toggle('reel-fallback', !f.querySelector('iframe.instagram-media'));
     });
   }
+  stripReelText();
   window.addEventListener('load',function(){
     if(window.instgrm&&window.instgrm.Embeds){ window.instgrm.Embeds.process(); }
-    setTimeout(reelCheck,6000);
-    setTimeout(reelCheck,11000);
+    stripReelText();
+    setTimeout(function(){ stripReelText(); reelCheck(); },2000);
+    setTimeout(function(){ stripReelText(); reelCheck(); },6000);
+    setTimeout(function(){ stripReelText(); reelCheck(); },11000);
   });
 })();
 </script>
