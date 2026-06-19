@@ -1,153 +1,136 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<script>document.documentElement.className='js';</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#2C3124">
-<title>Our Socials — Alankrita Saree</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
-<!-- shared global theme (nav, footer, cards, colours, fonts) -->
-<link rel="stylesheet" href="styles.css">
-<style>
 /* ============================================================
-   SOCIALS-PAGE ONLY
+   SOCIALS PAGE
    ============================================================ */
-.socials-wrap{max-width:1080px;margin:0 auto;padding:0 6vw 5rem}
-.socials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:1.5rem;margin-top:.5rem}
-.social-card{display:flex;flex-direction:column;align-items:flex-start;gap:1rem;padding:2.2rem 2rem;min-height:230px;border:1px solid rgba(185,145,79,.35);border-radius:6px;background:var(--ivory);text-decoration:none;color:var(--olive-deep);transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease)}
-.social-card:hover{transform:translateY(-6px);box-shadow:0 18px 42px -20px rgba(20,24,14,.55);border-color:var(--gold)}
-.social-ic{width:56px;height:56px;border-radius:50%;display:grid;place-content:center;background:var(--olive);color:var(--ivory);transition:.35s var(--ease)}
-.social-card:hover .social-ic{background:var(--gold);color:var(--olive-dark,#23271a)}
-.social-ic svg{width:27px;height:27px;fill:currentColor}
-.social-card h3{font-family:var(--display);font-size:1.35rem;letter-spacing:.06em;font-weight:400;color:var(--olive-deep);margin:0}
-.social-card .meta{font-family:var(--serif);font-style:italic;font-size:1.05rem;line-height:1.4;color:#5f5d49;margin:0}
-.social-card .go{margin-top:auto;font-family:var(--body);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:.5rem}
-.social-card .go svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6;transition:transform .3s var(--ease)}
-.social-card:hover .go svg{transform:translateX(5px)}
+.socials-page { padding-top: 140px; }
 
-.socials-foot{max-width:760px;margin:3.5rem auto 0;text-align:center}
-.socials-foot p{font-family:var(--serif);font-style:italic;font-size:clamp(1.15rem,2.4vw,1.5rem);line-height:1.6;color:var(--olive-deep)}
-</style>
-</head>
-<body class="">
+.socials-intro {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 56px;
+  padding: 0 24px;
+}
+.socials-intro h1 {
+  font-family: var(--font-heading);
+  font-size: 64px;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  margin-bottom: 22px;
+}
+.socials-intro p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.85;
+  max-width: 540px;
+  margin: 0 auto;
+}
 
-<nav id="nav">
-  <a class="logo" href="index.html">Alankrita<span>saree · pune</span></a>
-  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="collection.html">Collection</a></li>
-    <li><a href="story.html">Our Story</a></li>
-    <li><a href="craft.html">The Craft</a></li>
-    <li><a href="appointment.html">Book Appointment</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="socials.html" class="active">Our Socials</a></li>
-  </ul>
-</nav>
+.section-alt { background: #F5F1E8; }
+.text-gold { color: var(--accent-gold); }
 
-<main class="page active" id="page-socials">
-  <div class="page-head">
-    <p class="eyebrow reveal">Stay Connected</p>
-    <h2 class="reveal d1">Our <em>Socials</em></h2>
-    <p class="lede reveal d2">Follow our latest drapes, message us for live photos and pricing, or visit the atelier in person — we'd love to welcome you into the world of Alankrita.</p>
-  </div>
+/* Reels grid */
+.reels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+.reel-card {
+  position: relative;
+  display: block;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.reel-card .reel-thumb-img { width: 100%; height: 100%; }
+.reel-card:hover .reel-thumb-img { transform: scale(1.05); }
+.reel-card-caption {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 2;
+  padding: 44px 18px 16px;
+  text-align: left;
+  font-family: var(--font-heading);
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0));
+}
 
-  <div class="socials-wrap">
-    <div class="socials-grid">
+/* Connect — social cards */
+.socials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.social-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 26px 24px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  text-align: left;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.social-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-gold);
+  box-shadow: 0 18px 36px -22px rgba(26,26,26,0.45);
+}
+.social-card > span:not(.social-card-icon) {
+  display: flex;
+  flex-direction: column;
+}
+.social-card-icon {
+  flex-shrink: 0;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--gold-light);
+  color: var(--text-primary);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.social-card:hover .social-card-icon { background: var(--accent-gold); color: var(--white); }
+.social-card-icon svg { width: 24px; height: 24px; }
+.social-card-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.social-card-handle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 0.03em;
+}
 
-      <!-- Instagram -->
-      <a class="social-card reveal" href="https://www.instagram.com/alankritasaree?igsh=ejkxY3gwem9jM3Mz" target="_blank" rel="noopener">
-        <span class="social-ic">
-          <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.05 1.8.25 2.2.42.6.22 1 .48 1.4.9.42.4.68.8.9 1.4.17.4.37 1 .42 2.2.07 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.05 1.2-.25 1.8-.42 2.2-.22.6-.48 1-.9 1.4-.4.42-.8.68-1.4.9-.4.17-1 .37-2.2.42-1.3.07-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.05-1.8-.25-2.2-.42-.6-.22-1-.48-1.4-.9-.42-.4-.68-.8-.9-1.4-.17-.4-.37-1-.42-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.05-1.2.25-1.8.42-2.2.22-.6.48-1 .9-1.4.4-.42.8-.68 1.4-.9.4-.17 1-.37 2.2-.42C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.07-.9.04-1.4.2-1.7.32-.43.17-.74.37-1.06.7-.32.32-.52.63-.7 1.06-.12.3-.28.8-.32 1.7C3.45 9.05 3.44 9.4 3.44 12s0 2.95.07 4.15c.04.9.2 1.4.32 1.7.17.43.37.74.7 1.06.32.32.63.52 1.06.7.3.12.8.28 1.7.32 1.2.07 1.6.07 4.7.07s3.5 0 4.7-.07c.9-.04 1.4-.2 1.7-.32.43-.17.74-.37 1.06-.7.32-.32.52-.63.7-1.06.12-.3.28-.8.32-1.7.07-1.2.07-1.6.07-4.15s0-2.95-.07-4.15c-.04-.9-.2-1.4-.32-1.7-.17-.43-.37-.74-.7-1.06-.32-.32-.63-.52-1.06-.7-.3-.12-.8-.28-1.7-.32-1.2-.07-1.6-.07-4.7-.07zm0 3.06A4.94 4.94 0 1 1 7.06 12 4.94 4.94 0 0 1 12 7.06zm0 8.14A3.2 3.2 0 1 0 8.8 12 3.2 3.2 0 0 0 12 15.2zm6.3-8.34a1.15 1.15 0 1 1-1.15-1.15 1.15 1.15 0 0 1 1.15 1.15z"/></svg>
-        </span>
-        <h3>Instagram</h3>
-        <p class="meta">@alankritasaree</p>
-        <span class="go">Follow us <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
+/* Quick links */
+.quick-links-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-      <!-- WhatsApp -->
-      <a class="social-card reveal d1" href="https://wa.me/918412845177?text=Hello%20Alankrita%20Saree!" target="_blank" rel="noopener">
-        <span class="social-ic">
-          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.5 14.1c-.2.7-1.3 1.3-1.9 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-2.9-1.3-4.8-4.2-5-4.4-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.4.2.5.7 1.8.8 1.9.1.1.1.3 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.5.3.1.5.1.7-.1l.8-1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.6-.1 1.2z"/></svg>
-        </span>
-        <h3>WhatsApp</h3>
-        <p class="meta">+91 84128 45177</p>
-        <span class="go">Chat now <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-
-      <!-- Call -->
-      <a class="social-card reveal d2" href="tel:+918412845177">
-        <span class="social-ic">
-          <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.3 1.1l-2.1 2.1z"/></svg>
-        </span>
-        <h3>Call Us</h3>
-        <p class="meta">+91 84128 45177</p>
-        <span class="go">Tap to call <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-
-      <!-- Visit -->
-      <a class="social-card reveal d3" href="https://www.google.com/maps/search/?api=1&query=Alankrita%20Saree%2C%204%20Mayur%20Colony%2C%20Desai%20Bandhu%20Ambewale%20Building%2C%20Pune" target="_blank" rel="noopener">
-        <span class="social-ic">
-          <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5z"/></svg>
-        </span>
-        <h3>Visit the Atelier</h3>
-        <p class="meta">4, Mayur Colony,<br>Desai Bandhu Ambewale Building, 5th Floor</p>
-        <span class="go">Get directions <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-
-    </div>
-
-    <div class="socials-foot reveal">
-      <p>“Six yards of heritage, woven for the woman who carries Pune in her heart.”</p>
-    </div>
-  </div>
-</main>
-
-<footer>
-  <div class="foot-grid">
-    <div>
-      <div class="foot-logo">Alankrita</div>
-      <p style="font-family:var(--serif);font-style:italic;max-width:32ch">Handwoven sarees, curated with love in Pune — from the loom, for the legacy.</p>
-    </div>
-    <div>
-      <h4>Explore</h4>
-      <a href="index.html">Home</a>
-      <a href="collection.html">Collection</a>
-      <a href="story.html">Our Story</a>
-      <a href="craft.html">The Craft</a>
-    </div>
-    <div>
-      <h4>Visit</h4>
-      <a href="appointment.html">Book Appointment</a>
-      <a href="contact.html">Contact</a>
-      <a href="socials.html">Our Socials</a>
-      <a href="https://www.instagram.com/alankritasaree?igsh=ejkxY3gwem9jM3Mz" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://wa.me/918412845177" target="_blank" rel="noopener">WhatsApp · +91 84128 45177</a>
-    </div>
-  </div>
-  <div class="foot-bottom">
-    <span>© 2026 Alankrita Saree, Pune. All rights reserved.</span>
-    <span>4, Mayur Colony, Desai Bandhu Ambewale Building, 5th Floor</span>
-  </div>
-</footer>
-
-<a class="wa-float" href="https://wa.me/918412845177?text=Hello%20Alankrita%20Saree!" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.5 14.1c-.2.7-1.3 1.3-1.9 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-2.9-1.3-4.8-4.2-5-4.4-.1-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.4.2.5.7 1.8.8 1.9.1.1.1.3 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.5.3.1.5.1.7-.1l.8-1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.6-.1 1.2z"/></svg>
-</a>
-
-<script>
-(function(){
-  const nav=document.getElementById('nav'), burger=document.getElementById('burger'), navLinks=document.getElementById('navLinks');
-  burger.addEventListener('click',()=>{ navLinks.classList.toggle('open'); burger.classList.toggle('open'); });
-  navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{ navLinks.classList.remove('open'); burger.classList.remove('open'); }));
-  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40),{passive:true});
-  nav.classList.toggle('scrolled',window.scrollY>40);
-  const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}}),{threshold:0.01,rootMargin:'0px 0px -8% 0px'});
-  const vh=innerHeight||800; document.querySelectorAll('.reveal:not(.in)').forEach(el=>{ if(el.getBoundingClientRect().top<vh*0.92) el.classList.add('in'); else ro.observe(el); });
-})();
-</script>
-</body>
-</html>
+/* Socials responsive */
+@media (max-width: 1024px) {
+  .socials-grid { grid-template-columns: repeat(2, 1fr); max-width: 660px; }
+}
+@media (max-width: 768px) {
+  .socials-page { padding-top: 112px; }
+  .socials-intro h1 { font-size: 42px; }
+  .reels-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .socials-grid { grid-template-columns: 1fr; max-width: 420px; }
+}
+@media (max-width: 480px) {
+  .reels-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+}
