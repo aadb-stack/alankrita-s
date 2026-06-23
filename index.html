@@ -82,8 +82,18 @@
   .wb-watch:hover .pl{background:#fff}
   .wb-watch .pl svg{width:20px;height:20px;fill:#fff;transition:.3s}
   .wb-watch:hover .pl svg{fill:#d62976}
-  .wb-watch .tx{font-family:var(--body,'Karla',sans-serif);font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.9)}
   .wb-hint{text-align:center;font-family:var(--body,'Karla',sans-serif);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold,#C9A05C);margin-top:.6rem}
+
+  /* ===== Watch & Buy — navigation arrows ===== */
+  .wb-carousel{position:relative}
+  .wb-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:6;width:48px;height:48px;border-radius:50%;border:1px solid rgba(201,160,92,.7);background:rgba(44,49,36,.6);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);display:grid;place-content:center;cursor:pointer;color:var(--gold,#C9A05C);transition:background .3s,color .3s,opacity .3s,box-shadow .3s}
+  .wb-arrow:hover{background:var(--gold,#C9A05C);color:#2C3124;box-shadow:0 10px 26px -10px rgba(201,160,92,.7)}
+  .wb-arrow:focus-visible{outline:2px solid var(--gold,#C9A05C);outline-offset:3px}
+  .wb-arrow svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .wb-prev{left:6px}
+  .wb-next{right:6px}
+  .wb-arrow[disabled]{opacity:0;pointer-events:none}
+  @media (max-width:768px){.wb-arrow{display:none}}
 </style>
 </head>
 <body class="is-home home-top curtain-on">
@@ -231,31 +241,39 @@
       <h2 class="reveal d1">Watch &amp; <em>Buy</em></h2>
       <p class="lede reveal d2" style="margin-left:auto;margin-right:auto">See our weaves come alive in motion — then tap through to make one yours.</p>
     </div>
-    <div class="wb-rail">
-      <div class="wb-frame"><div class="wb-stage">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DSzB2kDjAs4/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DSzB2kDjAs4/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
-        <a class="wb-watch" href="https://www.instagram.com/reel/DSzB2kDjAs4/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
-      </div></div>
-      <div class="wb-frame"><div class="wb-stage">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DVNdW_QDKlZ/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DVNdW_QDKlZ/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
-        <a class="wb-watch" href="https://www.instagram.com/reel/DVNdW_QDKlZ/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
-      </div></div>
-      <div class="wb-frame"><div class="wb-stage">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DXUJn_aIo60/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DXUJn_aIo60/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
-        <a class="wb-watch" href="https://www.instagram.com/reel/DXUJn_aIo60/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
-      </div></div>
-      <div class="wb-frame"><div class="wb-stage">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DZmM7Shgr1K/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DZmM7Shgr1K/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
-        <a class="wb-watch" href="https://www.instagram.com/reel/DZmM7Shgr1K/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
-      </div></div>
-      <div class="wb-frame"><div class="wb-stage">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DTVPKF1DEVR/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DTVPKF1DEVR/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
-        <a class="wb-watch" href="https://www.instagram.com/reel/DTVPKF1DEVR/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
-      </div></div>
-      <div class="wb-frame"><div class="wb-stage">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPylJg7EuQi/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DPylJg7EuQi/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
-        <a class="wb-watch" href="https://www.instagram.com/reel/DPylJg7EuQi/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
-      </div></div>
+    <div class="wb-carousel">
+      <button class="wb-arrow wb-prev" id="wbPrev" type="button" aria-label="Previous reels">
+        <svg viewBox="0 0 24 24"><polyline points="15 5 8 12 15 19"/></svg>
+      </button>
+      <div class="wb-rail" id="wbRail">
+        <div class="wb-frame"><div class="wb-stage">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DSzB2kDjAs4/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DSzB2kDjAs4/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
+          <a class="wb-watch" href="https://www.instagram.com/reel/DSzB2kDjAs4/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+        </div></div>
+        <div class="wb-frame"><div class="wb-stage">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DVNdW_QDKlZ/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DVNdW_QDKlZ/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
+          <a class="wb-watch" href="https://www.instagram.com/reel/DVNdW_QDKlZ/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+        </div></div>
+        <div class="wb-frame"><div class="wb-stage">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DXUJn_aIo60/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DXUJn_aIo60/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
+          <a class="wb-watch" href="https://www.instagram.com/reel/DXUJn_aIo60/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+        </div></div>
+        <div class="wb-frame"><div class="wb-stage">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DZmM7Shgr1K/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DZmM7Shgr1K/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
+          <a class="wb-watch" href="https://www.instagram.com/reel/DZmM7Shgr1K/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+        </div></div>
+        <div class="wb-frame"><div class="wb-stage">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DTVPKF1DEVR/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DTVPKF1DEVR/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
+          <a class="wb-watch" href="https://www.instagram.com/reel/DTVPKF1DEVR/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+        </div></div>
+        <div class="wb-frame"><div class="wb-stage">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPylJg7EuQi/?utm_source=ig_embed" data-instgrm-version="14"><a href="https://www.instagram.com/reel/DPylJg7EuQi/" target="_blank" rel="noopener">View this reel on Instagram</a></blockquote>
+          <a class="wb-watch" href="https://www.instagram.com/reel/DPylJg7EuQi/" target="_blank" rel="noopener"><span class="pl"><svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg></span><span class="tx">Watch on Instagram</span></a>
+        </div></div>
+      </div>
+      <button class="wb-arrow wb-next" id="wbNext" type="button" aria-label="Next reels">
+        <svg viewBox="0 0 24 24"><polyline points="9 5 16 12 9 19"/></svg>
+      </button>
     </div>
     <p class="wb-hint">‹ swipe / scroll to explore ›</p>
   </section>
@@ -402,6 +420,34 @@
     i = (i + 1) % imgs.length;
     imgs[i].classList.add('is-active');
   }, 5000);
+})();
+
+// ===== Watch & Buy — arrow navigation =====
+(function () {
+  var rail = document.getElementById('wbRail');
+  if (!rail) return;
+  var prev = document.getElementById('wbPrev');
+  var next = document.getElementById('wbNext');
+
+  function step() {
+    var frame = rail.querySelector('.wb-frame');
+    var styles = getComputedStyle(rail);
+    var gap = parseFloat(styles.columnGap || styles.gap) || 22;
+    return frame ? frame.getBoundingClientRect().width + gap : rail.clientWidth * 0.9;
+  }
+
+  function update() {
+    var max = rail.scrollWidth - rail.clientWidth - 2;
+    if (prev) prev.disabled = rail.scrollLeft <= 2;
+    if (next) next.disabled = rail.scrollLeft >= max;
+  }
+
+  if (prev) prev.addEventListener('click', function () { rail.scrollBy({ left: -step(), behavior: 'smooth' }); });
+  if (next) next.addEventListener('click', function () { rail.scrollBy({ left: step(), behavior: 'smooth' }); });
+
+  rail.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
 })();
 </script>
 
