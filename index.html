@@ -312,13 +312,15 @@
   var hint = document.getElementById('curtainHint');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function revealSite() { document.body.classList.remove('curtain-on'); }
+    function revealSite() { document.body.classList.remove('curtain-on'); }
 
-  // Show the curtain only on the very first visit; afterwards skip it entirely.
   var SEEN_KEY = 'alankritaCurtainSeen', seenBefore = false;
   try { seenBefore = localStorage.getItem(SEEN_KEY) === '1'; } catch (e) {}
 
   if (reduce || seenBefore) { revealSite(); if (curtain.parentNode) curtain.remove(); return; }
+
+  /* First-ever visit: record it NOW — so the curtain can never replay, even on refresh or back-to-Home. */
+  try { localStorage.setItem(SEEN_KEY, '1'); } catch (e) {}
 
   try { window.scrollTo(0, 0); } catch (e) {}
 
