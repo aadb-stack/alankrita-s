@@ -12,6 +12,7 @@
   --serif:'Cormorant Garamond',serif;
   --body:'Karla',sans-serif;
   --ease:cubic-bezier(.22,.8,.26,.99);
+  --reveal-ease:cubic-bezier(.16,.84,.28,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -55,9 +56,9 @@ body.home-top nav:not(.scrolled) .burger span{background:#fff}
 .page.active{display:block}
 @keyframes pageIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 
-/* ---------- Reveal ---------- */
+/* ========================================================== */
 /* ---------- Reveal (rich & cinematic: rise + scale + blur) ---------- */
-:root{--reveal-ease:cubic-bezier(.16,.84,.28,1)}
+/* ========================================================== */
 /* content is visible by default; only hidden once JS confirms it can animate it back in */
 .reveal{
   transition:opacity 1.25s var(--reveal-ease),
@@ -110,11 +111,12 @@ body.home-top nav:not(.scrolled) .burger span{background:#fff}
 @keyframes revealRight{from{opacity:0;transform:translateX(90px) scale(.965);filter:blur(6px)}to{opacity:1;transform:none;filter:blur(0)}}
 @keyframes revealZoom{from{opacity:0;transform:scale(.88) translateY(34px);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
 @keyframes revealBlur{from{opacity:0;transform:translateY(40px) scale(.98);filter:blur(16px)}to{opacity:1;transform:none;filter:blur(0)}}
+
 /* word-by-word line reveal */
 .line-reveal{display:inline-block;overflow:hidden}
-.line-reveal .w{display:inline-block;transition:opacity .8s var(--ease),transform .8s var(--ease)}
-.js .line-reveal .w{opacity:0;transform:translateY(100%)}
-.js .line-reveal.in .w{opacity:1;transform:none}
+.line-reveal .w{display:inline-block;transition:opacity .8s var(--reveal-ease),transform .8s var(--reveal-ease),filter .8s var(--reveal-ease)}
+.js .line-reveal .w{opacity:0;transform:translateY(105%) rotate(2deg);filter:blur(4px)}
+.js .line-reveal.in .w{opacity:1;transform:none;filter:blur(0)}
 .line-reveal.in .w:nth-child(1){transition-delay:.05s}
 .line-reveal.in .w:nth-child(2){transition-delay:.12s}
 .line-reveal.in .w:nth-child(3){transition-delay:.19s}
@@ -125,12 +127,18 @@ body.home-top nav:not(.scrolled) .burger span{background:#fff}
 .line-reveal.in .w:nth-child(8){transition-delay:.54s}
 .line-reveal.in .w:nth-child(n+9){transition-delay:.6s}
 
+/* card reveals keep rise + scale but drop blur, as a low-end-device safety margin */
+.js .card.reveal{filter:none}
+.js .card.reveal.in{filter:none}
+
 /* ---------- Zoom parallax ---------- */
 .parallax-frame{overflow:hidden;position:relative}
 .parallax-zoom{transform:scale(1.18);transition:transform .1s linear;will-change:transform}
 @media (prefers-reduced-motion:reduce){
   .parallax-zoom{transform:none!important}
-  .reveal{transition:none;opacity:1;transform:none}
+  .reveal{transition:none;opacity:1;transform:none;filter:none}
+  .js .reveal{opacity:1;transform:none;filter:none}
+  .js .line-reveal .w{opacity:1;transform:none;filter:none}
   *{animation-duration:.001s!important}
 }
 
@@ -458,62 +466,61 @@ footer{background:var(--olive-dark);color:rgba(248,244,233,.75);padding:4.5rem 6
   .collection-filters{gap:1.2rem;flex-direction:column;align-items:stretch}
   .filter-group{flex-direction:column;align-items:flex-start;gap:.6rem}
 }
-<style>
-  /* ===== Reveal keyframes (deeper: travel + scale + blur-clear) ===== */
-  @keyframes srRise{from{opacity:0;transform:translateY(72px) scale(.95);filter:blur(6px)}to{opacity:1;transform:none;filter:blur(0)}}
-  @keyframes srLeft{from{opacity:0;transform:translateX(-96px) scale(.96);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}
-  @keyframes srRight{from{opacity:0;transform:translateX(96px) scale(.96);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}
 
-  /* ===== Path A: modern browsers — pure CSS scroll-driven reveal (NO JavaScript) ===== */
-  @supports (animation-timeline: view()){
-    @media (prefers-reduced-motion: no-preference){
-      .page-head,
-      #page-story > section{
-        animation: srRise both;
-        animation-timeline: view();
-        animation-range: entry 2% cover 42%;
-      }
-      .sr-point.sr-left{ animation: srLeft both; animation-timeline: view(); animation-range: entry 0% cover 32%; }
-      .sr-point.sr-right{ animation: srRight both; animation-timeline: view(); animation-range: entry 0% cover 32%; }
+/* ===== Reveal keyframes (deeper: travel + scale + blur-clear) ===== */
+@keyframes srRise{from{opacity:0;transform:translateY(72px) scale(.95);filter:blur(6px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes srLeft{from{opacity:0;transform:translateX(-96px) scale(.96);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes srRight{from{opacity:0;transform:translateX(96px) scale(.96);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}
+
+/* ===== Path A: modern browsers — pure CSS scroll-driven reveal (NO JavaScript) ===== */
+@supports (animation-timeline: view()){
+  @media (prefers-reduced-motion: no-preference){
+    .page-head,
+    #page-story > section{
+      animation: srRise both;
+      animation-timeline: view();
+      animation-range: entry 2% cover 42%;
     }
+    .sr-point.sr-left{ animation: srLeft both; animation-timeline: view(); animation-range: entry 0% cover 32%; }
+    .sr-point.sr-right{ animation: srRight both; animation-timeline: view(); animation-range: entry 0% cover 32%; }
   }
+}
 
-  /* ===== Path B: older browsers — JS adds .reveal-in. Hidden state lives ONLY here ===== */
-  @supports not (animation-timeline: view()){
-    html.srjs .page-head[data-reveal],
-    html.srjs #page-story > section[data-reveal],
-    html.srjs .sr-point[data-reveal]{
-      opacity:0; transform:translateY(72px) scale(.95); filter:blur(6px);
-      transition:opacity 1s cubic-bezier(.22,.61,.36,1),transform 1s cubic-bezier(.22,.61,.36,1),filter 1s ease;
-    }
-    html.srjs .sr-point.sr-left[data-reveal]{transform:translateX(-96px) scale(.96)}
-    html.srjs .sr-point.sr-right[data-reveal]{transform:translateX(96px) scale(.96)}
-    html.srjs [data-reveal].reveal-in{opacity:1 !important;transform:none !important;filter:blur(0) !important}
-    @media (prefers-reduced-motion: reduce){ html.srjs [data-reveal]{opacity:1 !important;transform:none !important;filter:none !important} }
+/* ===== Path B: older browsers — JS adds .reveal-in. Hidden state lives ONLY here ===== */
+@supports not (animation-timeline: view()){
+  html.srjs .page-head[data-reveal],
+  html.srjs #page-story > section[data-reveal],
+  html.srjs .sr-point[data-reveal]{
+    opacity:0; transform:translateY(72px) scale(.95); filter:blur(6px);
+    transition:opacity 1s cubic-bezier(.22,.61,.36,1),transform 1s cubic-bezier(.22,.61,.36,1),filter 1s ease;
   }
+  html.srjs .sr-point.sr-left[data-reveal]{transform:translateX(-96px) scale(.96)}
+  html.srjs .sr-point.sr-right[data-reveal]{transform:translateX(96px) scale(.96)}
+  html.srjs [data-reveal].reveal-in{opacity:1 !important;transform:none !important;filter:blur(0) !important}
+  @media (prefers-reduced-motion: reduce){ html.srjs [data-reveal]{opacity:1 !important;transform:none !important;filter:none !important} }
+}
 
-  /* ===== Our Journey — alternating curved (zig-zag) timeline ===== */
-  .sr-journey{position:relative;max-width:880px;margin:0 auto;padding:.5rem 0}
-  .sr-spine{position:absolute;top:.5rem;bottom:.5rem;left:50%;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,transparent,rgba(201,160,92,.6) 5%,rgba(201,160,92,.6) 95%,transparent);border-radius:2px}
-  .sr-point{position:relative;width:50%;box-sizing:border-box;margin:1.4rem 0;padding:0 2.8rem}
-  .sr-point.sr-left{margin-left:0;text-align:right}
-  .sr-point.sr-right{margin-left:50%;text-align:left}
-  .sr-node{position:absolute;top:.35rem;width:15px;height:15px;border-radius:50%;background:var(--gold,#C9A05C);box-shadow:0 0 0 6px rgba(201,160,92,.14),0 0 14px rgba(201,160,92,.55);z-index:3}
-  .sr-point.sr-left .sr-node{right:-7.5px}
-  .sr-point.sr-right .sr-node{left:-7.5px}
-  .sr-point::before{content:'';position:absolute;top:.5rem;width:1.7rem;height:1.7rem;border-bottom:2px solid rgba(201,160,92,.5);z-index:2}
-  .sr-point.sr-left::before{right:0;border-right:2px solid rgba(201,160,92,.5);border-radius:0 0 16px 0}
-  .sr-point.sr-right::before{left:0;border-left:2px solid rgba(201,160,92,.5);border-radius:0 0 0 16px}
-  .sr-card{display:inline-block;max-width:32ch;text-align:left}
-  .sr-year{display:block;font-family:var(--body,'Karla',sans-serif);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold,#C9A05C);margin-bottom:.45rem}
-  .sr-card h3{font-family:var(--serif,'Cormorant Garamond',serif);font-weight:500;font-size:clamp(1.15rem,2.4vw,1.4rem);margin:0 0 .45rem;line-height:1.25}
-  .sr-card p{font-family:var(--body,'Karla',sans-serif);font-size:.94rem;line-height:1.7;margin:0;opacity:.82}
-  @media (max-width:680px){
-    .sr-journey{max-width:none}
-    .sr-spine{left:8px}
-    .sr-point{width:100%;margin-left:0 !important;text-align:left !important;padding:0 0 0 2.6rem}
-    .sr-point .sr-node{left:1px !important;right:auto !important}
-    .sr-point::before{display:none}
-    .sr-card{max-width:none;text-align:left}
-  }
-</style>
+/* ===== Our Journey — alternating curved (zig-zag) timeline ===== */
+.sr-journey{position:relative;max-width:880px;margin:0 auto;padding:.5rem 0}
+.sr-spine{position:absolute;top:.5rem;bottom:.5rem;left:50%;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,transparent,rgba(201,160,92,.6) 5%,rgba(201,160,92,.6) 95%,transparent);border-radius:2px}
+.sr-point{position:relative;width:50%;box-sizing:border-box;margin:1.4rem 0;padding:0 2.8rem}
+.sr-point.sr-left{margin-left:0;text-align:right}
+.sr-point.sr-right{margin-left:50%;text-align:left}
+.sr-node{position:absolute;top:.35rem;width:15px;height:15px;border-radius:50%;background:var(--gold,#C9A05C);box-shadow:0 0 0 6px rgba(201,160,92,.14),0 0 14px rgba(201,160,92,.55);z-index:3}
+.sr-point.sr-left .sr-node{right:-7.5px}
+.sr-point.sr-right .sr-node{left:-7.5px}
+.sr-point::before{content:'';position:absolute;top:.5rem;width:1.7rem;height:1.7rem;border-bottom:2px solid rgba(201,160,92,.5);z-index:2}
+.sr-point.sr-left::before{right:0;border-right:2px solid rgba(201,160,92,.5);border-radius:0 0 16px 0}
+.sr-point.sr-right::before{left:0;border-left:2px solid rgba(201,160,92,.5);border-radius:0 0 0 16px}
+.sr-card{display:inline-block;max-width:32ch;text-align:left}
+.sr-year{display:block;font-family:var(--body,'Karla',sans-serif);font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold,#C9A05C);margin-bottom:.45rem}
+.sr-card h3{font-family:var(--serif,'Cormorant Garamond',serif);font-weight:500;font-size:clamp(1.15rem,2.4vw,1.4rem);margin:0 0 .45rem;line-height:1.25}
+.sr-card p{font-family:var(--body,'Karla',sans-serif);font-size:.94rem;line-height:1.7;margin:0;opacity:.82}
+@media (max-width:680px){
+  .sr-journey{max-width:none}
+  .sr-spine{left:8px}
+  .sr-point{width:100%;margin-left:0 !important;text-align:left !important;padding:0 0 0 2.6rem}
+  .sr-point .sr-node{left:1px !important;right:auto !important}
+  .sr-point::before{display:none}
+  .sr-card{max-width:none;text-align:left}
+}
