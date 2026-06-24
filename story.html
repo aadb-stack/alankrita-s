@@ -12,13 +12,37 @@
 <link rel="stylesheet" href="styles.css">
 
 <style>
-  /* ===== Scroll reveal — JS-gated, so nothing hides unless the script runs ===== */
-  html.srjs [data-reveal]{opacity:0;transform:translateY(36px);transition:opacity .95s cubic-bezier(.22,.61,.36,1),transform .95s cubic-bezier(.22,.61,.36,1);will-change:opacity,transform}
-  html.srjs [data-reveal].sr-left{transform:translate(-50px,10px)}
-  html.srjs [data-reveal].sr-right{transform:translate(50px,10px)}
-  html.srjs [data-reveal].reveal-in{opacity:1;transform:none}
-  @media (prefers-reduced-motion:reduce){
-    html.srjs [data-reveal]{opacity:1 !important;transform:none !important;transition:none !important}
+  /* ===== Reveal keyframes ===== */
+  @keyframes srRise{from{opacity:0;transform:translateY(42px)}to{opacity:1;transform:none}}
+  @keyframes srLeft{from{opacity:0;transform:translateX(-52px)}to{opacity:1;transform:none}}
+  @keyframes srRight{from{opacity:0;transform:translateX(52px)}to{opacity:1;transform:none}}
+
+  /* ===== Path A: modern browsers — pure CSS scroll-driven reveal (NO JavaScript) ===== */
+  @supports (animation-timeline: view()){
+    @media (prefers-reduced-motion: no-preference){
+      .page-head,
+      #page-story > section{
+        animation: srRise both;
+        animation-timeline: view();
+        animation-range: entry 8% cover 30%;
+      }
+      .sr-point.sr-left{ animation: srLeft both; animation-timeline: view(); animation-range: entry 0% cover 22%; }
+      .sr-point.sr-right{ animation: srRight both; animation-timeline: view(); animation-range: entry 0% cover 22%; }
+    }
+  }
+
+  /* ===== Path B: older browsers — JS adds .reveal-in. Hidden state lives ONLY here, so it never clashes with Path A ===== */
+  @supports not (animation-timeline: view()){
+    html.srjs .page-head[data-reveal],
+    html.srjs #page-story > section[data-reveal],
+    html.srjs .sr-point[data-reveal]{
+      opacity:0; transform:translateY(42px);
+      transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1);
+    }
+    html.srjs .sr-point.sr-left[data-reveal]{transform:translateX(-52px)}
+    html.srjs .sr-point.sr-right[data-reveal]{transform:translateX(52px)}
+    html.srjs [data-reveal].reveal-in{opacity:1 !important;transform:none !important}
+    @media (prefers-reduced-motion: reduce){ html.srjs [data-reveal]{opacity:1 !important;transform:none !important} }
   }
 
   /* ===== Our Journey — alternating curved (zig-zag) timeline ===== */
@@ -44,7 +68,6 @@
     .sr-point .sr-node{left:1px !important;right:auto !important}
     .sr-point::before{display:none}
     .sr-card{max-width:none;text-align:left}
-    html.srjs [data-reveal].sr-left,html.srjs [data-reveal].sr-right{transform:translate(40px,10px)}
   }
 </style>
 </head>
@@ -224,37 +247,31 @@
 
 <script src="script.js"></script>
 
-<!-- ===== Scroll-reveal (self-contained, fail-safe) ===== -->
+<!-- Fallback only: runs ONLY on browsers without CSS scroll-timeline -->
 <script>
-(function () {
-  if (!('IntersectionObserver' in window)) return; // no IO support → leave everything visible
+(function(){
+  function supportsScrollTL(){
+    try{ if(window.CSS && CSS.supports){ if(CSS.supports('animation-timeline','view()')) return true; if(CSS.supports('(animation-timeline: view())')) return true; } }catch(e){}
+    return false;
+  }
+  if(supportsScrollTL()) return;               // modern browser → CSS handles the reveal
+  if(!('IntersectionObserver' in window)) return;
 
   var blocks = [];
-  function add(el){ if (el && blocks.indexOf(el) === -1) blocks.push(el); }
-
+  function add(el){ if(el && blocks.indexOf(el)===-1) blocks.push(el); }
   add(document.querySelector('.page-head'));
-  document.querySelectorAll('main > section').forEach(add);   // reveal each section
-  document.querySelectorAll('.sr-point').forEach(add);        // reveal each journey point
+  document.querySelectorAll('#page-story > section').forEach(add);
+  document.querySelectorAll('.sr-point').forEach(add);
+  if(!blocks.length) return;
 
-  if (!blocks.length) return;
-
-  try {
-    blocks.forEach(function (el) { el.setAttribute('data-reveal', ''); });
-    document.documentElement.classList.add('srjs'); // only NOW does the hidden state apply
-
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          e.target.classList.add('reveal-in');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
-
-    blocks.forEach(function (el) { io.observe(el); });
-  } catch (err) {
-    document.documentElement.classList.remove('srjs'); // anything goes wrong → reveal all
-  }
+  try{
+    blocks.forEach(function(el){ el.setAttribute('data-reveal',''); });
+    document.documentElement.classList.add('srjs');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('reveal-in'); io.unobserve(e.target);} });
+    }, { threshold:0.1, rootMargin:'0px 0px -8% 0px' });
+    blocks.forEach(function(el){ io.observe(el); });
+  }catch(err){ document.documentElement.classList.remove('srjs'); }
 })();
 </script>
 </body>
