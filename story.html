@@ -10,27 +10,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-
-<style>
-  /* ===== Elegant scroll reveal ===== */
-  html.js .reveal{opacity:0;transform:translateY(32px);transition:opacity 1s cubic-bezier(.22,.61,.36,1),transform 1s cubic-bezier(.22,.61,.36,1);will-change:opacity,transform}
-  html.js .reveal.from-left{transform:translateX(-48px)}
-  html.js .reveal.from-right{transform:translateX(48px)}
-  html.js .reveal.zoom{transform:scale(.93)}
-  html.js .reveal.blur{filter:blur(14px);transition:opacity 1.1s ease,transform 1.1s cubic-bezier(.22,.61,.36,1),filter 1.1s ease}
-  html.js .reveal.d1{transition-delay:.14s}
-  html.js .reveal.d2{transition-delay:.28s}
-  html.js .reveal.d3{transition-delay:.42s}
-  html.js .reveal.is-inview{opacity:1;transform:none;filter:none}
-
-  /* Elegant masked wipe for the headline */
-  html.js .line-reveal{transform:none;opacity:0;clip-path:inset(0 0 102% 0);transition:clip-path 1.2s cubic-bezier(.76,0,.24,1),opacity .9s ease}
-  html.js .line-reveal.is-inview{opacity:1;clip-path:inset(0 0 -8% 0)}
-
-  @media (prefers-reduced-motion: reduce){
-    html.js .reveal,html.js .line-reveal{opacity:1 !important;transform:none !important;filter:none !important;clip-path:none !important;transition:none !important}
-  }
-</style>
 </head>
 <body class="">
 
@@ -197,26 +176,5 @@
 </a>
 
 <script src="script.js"></script>
-
-<!-- ===== Elegant scroll-reveal ===== -->
-<script>
-(function () {
-  var els = document.querySelectorAll('.reveal, .line-reveal');
-  if (!els.length) return;
-  if (!('IntersectionObserver' in window)) {
-    for (var i = 0; i < els.length; i++) els[i].classList.add('is-inview');
-    return;
-  }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) {
-        e.target.classList.add('is-inview');
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
-  els.forEach(function (el) { io.observe(el); });
-})();
-</script>
 </body>
 </html>
