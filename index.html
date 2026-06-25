@@ -340,15 +340,7 @@
 
   function revealSite() { document.body.classList.remove('curtain-on'); }
 
-  var SEEN_KEY = 'alankritaCurtainSeen', seenBefore = false;
-  try { seenBefore = localStorage.getItem(SEEN_KEY) === '1'; } catch (e) {}
-
-  if (reduce || seenBefore) { revealSite(); if (curtain.parentNode) curtain.remove(); return; }
-
-  /* First-ever visit: record it NOW so the curtain can never replay. */
-  try { localStorage.setItem(SEEN_KEY, '1'); } catch (e) {}
-
-  try { window.scrollTo(0, 0); } catch (e) {}
+  if (reduce) { revealSite(); if (curtain.parentNode) curtain.remove(); return; }
 
   var dragging = false, startY = 0, delta = 0, opened = false;
   function panelH() { return curtain.offsetHeight / 2; }
