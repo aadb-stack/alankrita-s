@@ -3,6 +3,7 @@
 <head>
 <script>
   document.documentElement.className = 'js';
+  try { if (sessionStorage.getItem('alankritaCurtainSeen') === '1') document.documentElement.className += ' curtain-seen'; } catch (e) {}
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -18,7 +19,7 @@
 <link rel="preload" as="image" href="https://i.ibb.co/Z0zwfvj/Whats-App-Image-2026-06-10-at-6-40-23-PM-1.jpg">
 
 <style>
-  /* ===== Curtain reveal (every visit) ===== */
+  /* ===== Curtain reveal (once per visit / session) ===== */
   html.js body.curtain-on { overflow: hidden; }
   html.js body.curtain-on .img-hero-content,
   html.js body.curtain-on .scroll-cue { opacity: 0 !important; }
@@ -26,6 +27,11 @@
 
   .curtain { position: fixed; inset: 0; height: 100%; z-index: 9999; background: #2C3124; touch-action: none; user-select: none; -webkit-user-select: none; }
   html:not(.js) .curtain { display: none; }
+
+  html.curtain-seen .curtain { display: none !important; }
+  html.curtain-seen body.curtain-on { overflow: auto; }
+  html.curtain-seen body.curtain-on .img-hero-content,
+  html.curtain-seen body.curtain-on .scroll-cue { opacity: 1 !important; }
 
   .curtain.lift { opacity: 0; transition: opacity .55s ease; }
   .curtain-panel { position: absolute; left: 0; width: 100%; height: 50.6%; background: linear-gradient(180deg, #2b3122 0%, #181c11 100%); transition: transform .8s cubic-bezier(.76,0,.24,1); will-change: transform; }
@@ -316,7 +322,7 @@
 
 <script src="script.js"></script>
 
-<!-- ===== Curtain reveal logic (every visit) ===== -->
+<!-- ===== Curtain reveal logic (once per session) ===== -->
 <script>
 (function () {
   var curtain = document.getElementById('curtain');
@@ -326,6 +332,14 @@
   var botP = curtain.querySelector('.curtain-bot');
   var hint = document.getElementById('curtainHint');
   function revealSite() { document.body.classList.remove('curtain-on'); }
+
+  var SEEN_KEY = 'alankritaCurtainSeen', seenThisSession = false;
+  try { seenThisSession = sessionStorage.getItem(SEEN_KEY) === '1'; } catch (e) {}
+
+  if (seenThisSession) { revealSite(); if (curtain.parentNode) curtain.remove(); return; }
+
+  /* First load of this visit — remember it for the rest of the session. */
+  try { sessionStorage.setItem(SEEN_KEY, '1'); } catch (e) {}
 
   try { window.scrollTo(0, 0); } catch (e) {}
 
